@@ -1,0 +1,35 @@
+name: Build Portable Python for ARM
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    # 关键：指定使用 M 系列的 runner
+    runs-on: macos-14  # 或者 macos-13，它们都是 Apple Silicon (M1/M2)
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12' # 这里安装一个临时的 Python 来运行 portable-python
+
+      - name: Install portable-python
+        run: pip install portable-python
+
+      - name: Build the portable Python environment
+        # 这条命令会创建一个名为 "python-3.12.11-arm64" 的文件夹
+        run: python -m portable_python build 3.12.11
+
+      - name: Upload the portable Python as an artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: portable-python-arm64
+          # portable-python 默认在当前目录下创建一个文件夹
+          path: python-3.12.11-arm64
+
