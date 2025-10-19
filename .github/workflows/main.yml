@@ -26,10 +26,12 @@ jobs:
         # 这条命令会创建一个名为 "python-3.12.11-arm64" 的文件夹
         run: python -m portable_python build 3.12.11
 
-      - name: Upload the portable Python as an artifact
+      - name: Upload portable Python artifact
         uses: actions/upload-artifact@v4
         with:
           name: portable-python-arm64
-          # portable-python 默认在当前目录下创建一个文件夹
-          path: python-3.12.11-arm64
+          # 修改这里的路径！
+          path: build/ppp-marker/3.12.11 
+          if-no-files-found: warn
+          compression-level: 6
 
