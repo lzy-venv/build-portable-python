@@ -24,14 +24,14 @@ jobs:
 
       - name: Build the portable Python environment
         # 这条命令会创建一个名为 "python-3.12.11-arm64" 的文件夹
-        run: python -m portable_python build 3.12.11
+        run: python -m portable_python build 3.11.14
 
       - name: Upload portable Python artifact
         uses: actions/upload-artifact@v4
         with:
           name: portable-python-arm64
           # 修改这里的路径！
-          path: build/ppp-marker/3.12.11 
+          path: build/ppp-marker/3.11.14 
           if-no-files-found: warn
           compression-level: 6
 
